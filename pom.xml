@@ -39,7 +39,7 @@
         <java.version>11</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
-        <junit-platform.version>5.3.1</junit-platform.version>
+        <junit-platform.version>5.7.0</junit-platform.version>
     </properties>
 
     <dependencies>
@@ -61,9 +61,27 @@
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-params</artifactId>
+            <version>5.7.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
             <version>${junit-platform.version}</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <version>3.16.1</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>5.7.0</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 
@@ -77,11 +95,13 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.22.0</version>
+                <version>2.22.2</version>
                 <configuration>
                     <argLine>
                         --illegal-access=permit
                     </argLine>
+<!--                    <groups>controllers</groups>-->
+                    <excludedGroups>models</excludedGroups>
                 </configuration>
             </plugin>
             <plugin>
@@ -93,6 +113,19 @@
                         --illegal-access=permit
                     </argLine>
                 </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>integration-test</goal>
+                            <goal>verify</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-site-plugin</artifactId>
+                <version>3.7.1</version>
             </plugin>
         </plugins>
     </build>

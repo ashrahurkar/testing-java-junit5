@@ -1,16 +1,16 @@
 package guru.springframework.sfgpetclinic.controllers;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import guru.springframework.sfgpetclinic.ControllerTests;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.condition.*;
 
 import java.time.Duration;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
-class IndexControllerTest {
+class IndexControllerTest implements ControllerTests {
 
     private IndexController indexController;
 
@@ -25,6 +25,7 @@ class IndexControllerTest {
         assertEquals("index", indexController.index());
         assertEquals("index", indexController.index(),() -> "Expensive " +
                 "Message");
+        assertThat(indexController.index()).isEqualTo("index");
     }
 
     @Test
@@ -61,5 +62,35 @@ class IndexControllerTest {
     @Test
     void testAssumptionIsTrue() {
         assumeTrue("PROD".equalsIgnoreCase("PROD"));
+    }
+
+    @EnabledOnOs(OS.LINUX)
+    @Test
+    void testLinux() {
+
+    }
+
+    @EnabledOnOs(OS.WINDOWS)
+    @Test
+    void testWindows() {
+
+    }
+
+    @EnabledOnJre(JRE.JAVA_8)
+    @Test
+    void testJava8() {
+
+    }
+
+    @EnabledOnJre(JRE.JAVA_11)
+    @Test
+    void testJava11() { 
+
+    }
+
+    @EnabledIfEnvironmentVariable(named = "USER", matches = "guest")
+    @Test
+    void testIfUserGuest() {
+
     }
 }
